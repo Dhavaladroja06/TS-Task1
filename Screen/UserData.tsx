@@ -17,7 +17,7 @@ const UserDataScreen: React.FC = () => {
     const [passwordError, setPasswordError] = useState<string>('');
 
 
-    const handleSave = () => {
+    const handleSave = async () => {
 
         if (!username.trim()) {
             setUsernameError('Username is required');
@@ -60,14 +60,31 @@ const UserDataScreen: React.FC = () => {
             setPasswordError('');
         }
 
-
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Phone Number:', phoneNumber);
-        console.log('Password:', password);
-        console.log('User Image:', userImage);
-
-        clearForm();
+        const userData = {
+            username,
+            email,
+            phoneNumber,
+            password,
+            userImage
+        }
+        // console.log(userData)
+        try {
+            const response = await fetch("http://192.168.1.6:3000/UserData",{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            })  
+            if (response.ok) {
+                console.log('User data saved on the server');
+                clearForm();
+            } else {
+                console.error('Failed to save user data on the server');
+            }
+        } catch (error) {
+            console.error('Error while sending data to the server:', error);
+        }
     };
 
     const clearForm = () => {
@@ -111,7 +128,7 @@ const UserDataScreen: React.FC = () => {
                 </TouchableOpacity>
             </View>
             <CustomTextInput
-                label="Username"
+                label="User Name"
                 placeholder="Enter username"
                 value={username}
                 onChangeText={(text: string) => setUsername(text)}
@@ -155,10 +172,10 @@ const UserDataScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         paddingHorizontal: 20,
         padding: 40,
         backgroundColor: "#c2dfeb",
-        borderRadius: 10
     },
     profileImageButton: {
         width: 120,

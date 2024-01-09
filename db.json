@@ -1,3 +1,20 @@
 {
-    "UserData" : []
+  "UserData": [
+    {
+      "username": "dshd",
+      "email": "ndns@fjd.com",
+      "phoneNumber": "4629194255",
+      "password": "rfdjffjsj",
+      "userImage": "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FTask1-e9099b76-6565-49b2-b8a0-0425acbd6d0c/ImagePicker/f4814022-41ba-488a-b923-67141df0cf6f.jpeg",
+      "id": 1
+    },
+    {
+      "username": "fufu",
+      "email": "cid@du.com",
+      "phoneNumber": "6564553446",
+      "password": "xudfhe",
+      "userImage": null,
+      "id": 2
+    }
+  ]
 }

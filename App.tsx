@@ -1,21 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import UserDataScreen from './Screen/UserData';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import BottomTabNavigator from './Navigations/ButtomTab';
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <UserDataScreen />
-    </View>
+    <NavigationContainer>
+      <BottomTabNavigator />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    // alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10
-  },
-});
+export default App;
