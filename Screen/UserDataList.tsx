@@ -31,29 +31,30 @@ const UserDataList: React.FC = () => {
     }, []);
 
     const renderUserDataItem = ({ item }: { item: UserData }) => (
-        <View style={styles.userDataItem}>
-            {item.userImage ? (
-                <Image source={{ uri: item.userImage }} style={styles.userImage} />
-            ) : (
-                <Image source={require("../assets/7309681.jpg")} style={styles.userImage} />
-            )}
-            <View style={styles.userData}>
-                <Text style={styles.username}>Username: {item.username}</Text>
-                <Text style={styles.email}>Email: {item.email}</Text>
-                <Text style={styles.phoneNumber}>Phone Number: {item.phoneNumber}</Text>
+        <View style={styles.card}>
+            <View style={styles.cardContent}>
+                {item.userImage ? (
+                    <Image source={{ uri: item.userImage }} style={styles.userImage} />
+                ) : (
+                    <Image source={require("../assets/7309681.jpg")} style={styles.userImage} />
+                )}
+                <View style={styles.userInfo}>
+                    <Text style={styles.userInfoText}>Username: {item.username}</Text>
+                    <Text style={styles.userInfoText}>Email: {item.email}</Text>
+                    <Text style={styles.userInfoText}>Phone Number: {item.phoneNumber}</Text>
+                </View>
             </View>
         </View>
     );
 
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.cardContainer}>
                 {userData.length > 0 ? (
                     <FlatList
                         data={userData}
                         renderItem={renderUserDataItem}
                         keyExtractor={(item) => item.username}
-                        style={styles.userContainer}
                     />
                 ) : (
                     <Text>No user data available</Text>
@@ -66,44 +67,35 @@ const UserDataList: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#9fdaf3',
-        padding: 5,
+        padding: 3,
+        backgroundColor:"#9fdaf3"
     },
-    userContainer: {
+    cardContainer: {
+        width: '100%',
+    },
+    card: {
         backgroundColor: '#4ac7fd',
-        padding: 10,
-        borderRadius: 10,
-        marginBottom: 10
+        borderRadius: 8,
+        marginBottom: 5,
+        elevation: 4,
     },
-    userDataItem: {
+    cardContent: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#fff',
-        paddingBottom: 10,
+        padding: 12,
     },
     userImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 10,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginRight: 12,
     },
-    userData: {
+    userInfo: {
         flex: 1,
     },
-    username: {
+    userInfoText: {
         fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    email: {
-        fontSize: 14,
-        color: '#333',
-    },
-    phoneNumber: {
-        fontSize: 14,
-        color: '#555',
+        marginBottom: 4,
     },
 });
 
