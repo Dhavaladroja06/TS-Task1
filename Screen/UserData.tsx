@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, ScrollView } from 'react-native';
 import CustomTextInput from '../Components/Textinput';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -69,13 +69,13 @@ const UserDataScreen: React.FC = () => {
         }
         // console.log(userData)
         try {
-            const response = await fetch("http://192.168.1.6:3000/UserData",{
+            const response = await fetch("http://192.168.1.6:3000/UserData", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
-            })  
+            })
             if (response.ok) {
                 console.log('User data saved on the server');
                 clearForm();
@@ -114,65 +114,67 @@ const UserDataScreen: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.ImageView}>
-                <TouchableOpacity onPress={pickImage} style={styles.profileImageButton}>
-                    {userImage ? (
-                        <Image source={{ uri: userImage }} style={styles.profileImage} />
-                    ) : (
-                        <View style={styles.iconContainer}>
-                            <MaterialIcons name="account-circle" size={100} color="#1d4ef098" />
-                            <MaterialIcons name="camera-alt" size={28} color="lightblue" style={styles.cameraIcon} />
-                        </View>
-                    )}
+        <ScrollView>
+            <View style={styles.container}>
+                <View style={styles.ImageView}>
+                    <TouchableOpacity onPress={pickImage} style={styles.profileImageButton}>
+                        {userImage ? (
+                            <Image source={{ uri: userImage }} style={styles.profileImage} />
+                        ) : (
+                            <View style={styles.iconContainer}>
+                                <MaterialIcons name="account-circle" size={100} color="#1d4ef098" />
+                                <MaterialIcons name="camera-alt" size={28} color="lightblue" style={styles.cameraIcon} />
+                            </View>
+                        )}
+                    </TouchableOpacity>
+                </View>
+                <CustomTextInput
+                    label="User Name"
+                    placeholder="Enter username"
+                    value={username}
+                    onChangeText={(text: string) => setUsername(text)}
+                    icon="person-outline"
+                    error={usernameError}
+                />
+                <CustomTextInput
+                    label="Email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChangeText={(text: string) => setEmail(text)}
+                    keyboardType="email-address"
+                    icon="mail-outline"
+                    error={emailError}
+                />
+                <CustomTextInput
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                    value={phoneNumber}
+                    onChangeText={(text: string) => setPhoneNumber(text)}
+                    keyboardType="phone-pad"
+                    icon="call-outline"
+                    maxLength={10}
+                    error={phoneNumberError}
+                />
+                <CustomTextInput
+                    label="Password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChangeText={(text: string) => setPassword(text)}
+                    secureTextEntry
+                    icon="lock-closed-outline"
+                    error={passwordError}
+                />
+                <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+                    <Text style={styles.ButtonText}>Save</Text>
                 </TouchableOpacity>
             </View>
-            <CustomTextInput
-                label="User Name"
-                placeholder="Enter username"
-                value={username}
-                onChangeText={(text: string) => setUsername(text)}
-                icon="person-outline"
-                error={usernameError}
-            />
-            <CustomTextInput
-                label="Email"
-                placeholder="Enter email"
-                value={email}
-                onChangeText={(text: string) => setEmail(text)}
-                keyboardType="email-address"
-                icon="mail-outline"
-                error={emailError}
-            />
-            <CustomTextInput
-                label="Phone Number"
-                placeholder="Enter phone number"
-                value={phoneNumber}
-                onChangeText={(text: string) => setPhoneNumber(text)}
-                keyboardType="phone-pad"
-                icon="call-outline"
-                maxLength={10}
-                error={phoneNumberError}
-            />
-            <CustomTextInput
-                label="Password"
-                placeholder="Enter password"
-                value={password}
-                onChangeText={(text: string) => setPassword(text)}
-                secureTextEntry
-                icon="lock-closed-outline"
-                error={passwordError}
-            />
-            <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-                <Text style={styles.ButtonText}>Save</Text>
-            </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         paddingHorizontal: 20,
         padding: 40,
         backgroundColor: "#c2dfeb",
